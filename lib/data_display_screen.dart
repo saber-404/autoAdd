@@ -159,7 +159,7 @@ class _DataDisplayScreenState extends State<DataDisplayScreen> {
           final newEntries = await Navigator.push<List<int>>(
             context,
             MaterialPageRoute(
-              builder: (context) => EntryScreen(),
+              builder: (context) => EntryScreen(date: widget.date),
             ),
           );
           if (newEntries != null && newEntries.isNotEmpty) {

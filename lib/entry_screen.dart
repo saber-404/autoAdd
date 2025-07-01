@@ -1,8 +1,13 @@
 
 import 'package:flutter/material.dart';
 // import 'package:speech_to_text/speech_to_text.dart' as stt;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intl/intl.dart';
 
 class EntryScreen extends StatefulWidget {
+  final DateTime date;
+
+  EntryScreen({required this.date});
   @override
   _EntryScreenState createState() => _EntryScreenState();
 }
@@ -19,6 +24,12 @@ class _EntryScreenState extends State<EntryScreen> {
     // _speech.initialize();
   }
 
+  void _saveData() async {
+    final prefs = await SharedPreferences.getInstance();
+    final dateStr = DateFormat('yyyy-MM-dd').format(widget.date);
+    await prefs.setStringList('${dateStr}_entries', _entries.map((e) => e.toString()).toList());
+  }
+
   void _addEntry() {
     final value = int.tryParse(_controller.text);
     if (value != null && value > 0) {
@@ -26,6 +37,7 @@ class _EntryScreenState extends State<EntryScreen> {
         _entries.add(value);
         _controller.clear();
       });
+      _saveData(); // 每次添加后保存数据
     }
   }
 
@@ -52,6 +64,7 @@ class _EntryScreenState extends State<EntryScreen> {
                   setState(() {
                     _entries[index] = newValue;
                   });
+                  _saveData(); // 修改后保存数据
                 }
                 Navigator.pop(context);
               },
@@ -67,6 +80,7 @@ class _EntryScreenState extends State<EntryScreen> {
     setState(() {
       _entries.removeAt(index);
     });
+    _saveData(); // 删除后保存数据
   }
 
   /*
@@ -96,7 +110,7 @@ class _EntryScreenState extends State<EntryScreen> {
         actions: [
           TextButton(
             onPressed: () {
-              Navigator.pop(context, _entries);
+              Navigator.pop(context, _entries); // 返回数据给上一页
             },
             child: Text('完成', style: TextStyle(color: Colors.white)),
           )
