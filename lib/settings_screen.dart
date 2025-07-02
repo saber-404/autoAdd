@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -31,22 +30,22 @@ class _SettingsScreenState extends State<SettingsScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('设置'),
-      ),
+      appBar: AppBar(title: Text('设置')),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            TextField(
-              controller: _priceController,
-              decoration: InputDecoration(labelText: '单价(元)'),
-              keyboardType: TextInputType.number,
-            ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: _savePrice,
-              child: Text('保存'),
+            Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _priceController,
+                    decoration: InputDecoration(labelText: '单价(元)'),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                ElevatedButton(onPressed: _savePrice, child: Text('保存')),
+              ],
             ),
             SizedBox(height: 40),
             ElevatedButton(
