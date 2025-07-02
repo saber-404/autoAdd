@@ -40,7 +40,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
           children: [
             TextField(
               controller: _priceController,
-              decoration: InputDecoration(labelText: '单价'),
+              decoration: InputDecoration(labelText: '单价(元)'),
               keyboardType: TextInputType.number,
             ),
             SizedBox(height: 20),

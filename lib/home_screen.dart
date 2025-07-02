@@ -19,6 +19,8 @@ class _HomeScreenState extends State<HomeScreen> {
   double _monthlyReward = 0.0;
   double _price = 0.09;
   String _monthLabel = '';
+  DateTime startDate = DateTime(2024,1,1);
+  DateTime endDate = DateTime(3099,12,31);
 
   @override
   void initState() {
@@ -56,8 +58,8 @@ class _HomeScreenState extends State<HomeScreen> {
     final DateTime? picked = await showDatePicker(
         context: context,
         initialDate: _focusedDay,
-        firstDate: DateTime(2020, 1),
-        lastDate: DateTime(2030, 12),
+        firstDate: startDate,
+        lastDate: endDate,
         locale: const Locale('zh', 'CN'));
     if (picked != null && picked != _focusedDay) {
       setState(() {
@@ -94,8 +96,8 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           TableCalendar(
             locale: 'zh_CN',
-            firstDay: DateTime.utc(2020, 1, 1),
-            lastDay: DateTime.utc(2030, 12, 31),
+            firstDay: startDate,
+            lastDay: endDate,
             focusedDay: _focusedDay,
             headerStyle: HeaderStyle(
               formatButtonVisible: false,
@@ -139,8 +141,8 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.symmetric(vertical: 8.0),
               child: Column(
                 children: [
-                  Text('$_monthLabel拣货: $_monthlyTotal', style: TextStyle(fontSize: 20)),
-                  Text('$_monthLabel报酬: ${_monthlyReward.toStringAsFixed(2)}', style: TextStyle(fontSize: 20)),
+                  Text('$_monthLabel拣货: $_monthlyTotal单位', style: TextStyle(fontSize: 20)),
+                  Text('$_monthLabel报酬: ${_monthlyReward.toStringAsFixed(2)}元', style: TextStyle(fontSize: 20)),
                 ],
               ),
             ),

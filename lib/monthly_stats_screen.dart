@@ -57,7 +57,7 @@ class _MonthlyStatsScreenState extends State<MonthlyStatsScreen> {
           final stat = _dailyStats[index];
           return ListTile(
             title: Text(stat['day']),
-            trailing: Text('总量: ${stat['total']}, 报酬: ${stat['reward'].toStringAsFixed(2)}'),
+            trailing: Text('总量: ${stat['total']}单位, 报酬: ${stat['reward'].toStringAsFixed(2)}元'),
           );
         },
       ),

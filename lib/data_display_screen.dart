@@ -135,8 +135,8 @@ class _DataDisplayScreenState extends State<DataDisplayScreen> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                Text('总量: $_total', style: TextStyle(fontSize: 18)),
-                Text('报酬: ${_reward.toStringAsFixed(2)}', style: TextStyle(fontSize: 18)),
+                Text('总量: $_total单位', style: TextStyle(fontSize: 18)),
+                Text('报酬: ${_reward.toStringAsFixed(2)}元', style: TextStyle(fontSize: 18)),
               ],
             ),
           ),
