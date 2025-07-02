@@ -33,8 +33,10 @@ class _MonthlyStatsScreenState extends State<MonthlyStatsScreen> {
         final day = key.split('_').first;
         final entries = prefs.getStringList(key)?.map((e) => int.parse(e)).toList() ?? [];
         final total = entries.fold(0, (sum, item) => sum + item);
-        final reward = total * _price;
-        stats.add({'day': day, 'total': total, 'reward': reward});
+        if (total > 0) {
+          final reward = total * _price;
+          stats.add({'day': day, 'total': total, 'reward': reward});
+        }
       }
     }
 
