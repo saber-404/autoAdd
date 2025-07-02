@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
-import 'entry_screen.dart';
 
 class DataDisplayScreen extends StatefulWidget {
   final DateTime date;
@@ -14,6 +12,7 @@ class DataDisplayScreen extends StatefulWidget {
 }
 
 class _DataDisplayScreenState extends State<DataDisplayScreen> {
+  final _controller = TextEditingController();
   List<int> _entries = [];
   int _total = 0;
   double _reward = 0.0;
@@ -44,6 +43,18 @@ class _DataDisplayScreenState extends State<DataDisplayScreen> {
   void _calculateTotals() {
     _total = _entries.fold(0, (sum, item) => sum + item);
     _reward = _total * _price;
+  }
+
+  void _addEntry() {
+    final value = int.tryParse(_controller.text);
+    if (value != null && value > 0) {
+      setState(() {
+        _entries.add(value);
+        _calculateTotals();
+        _controller.clear();
+      });
+      _saveData();
+    }
   }
 
   void _editEntry(int index) {
@@ -129,6 +140,24 @@ class _DataDisplayScreenState extends State<DataDisplayScreen> {
               ],
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
+              children: [
+                Expanded(
+                  child: TextField(
+                    controller: _controller,
+                    decoration: InputDecoration(labelText: '输入数量'),
+                    keyboardType: TextInputType.number,
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: _addEntry,
+                  child: Text('添加'),
+                ),
+              ],
+            ),
+          ),
           Expanded(
             child: ListView.builder(
               itemCount: _entries.length,
@@ -153,25 +182,6 @@ class _DataDisplayScreenState extends State<DataDisplayScreen> {
             ),
           ),
         ],
-      ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () async {
-          final newEntries = await Navigator.push<List<int>>(
-            context,
-            MaterialPageRoute(
-              builder: (context) => EntryScreen(date: widget.date),
-            ),
-          );
-          if (newEntries != null && newEntries.isNotEmpty) {
-            setState(() {
-              _entries.addAll(newEntries);
-              _calculateTotals();
-            });
-            _saveData();
-          }
-        },
-        label: Text('添加'),
-        icon: Icon(Icons.add),
       ),
     );
   }
